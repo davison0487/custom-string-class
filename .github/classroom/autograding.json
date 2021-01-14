@@ -1,0 +1,44 @@
+{
+  "tests": [
+    {
+      "name": "Compile test",
+      "setup": "make",
+      "run": "./hw1 compile",
+      "input": "",
+      "output": "Compile test PASS",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 20
+    },
+    {
+      "name": "OCF Test",
+      "setup": "make",
+      "run": "./hw1 OCF",
+      "input": "",
+      "output": "OCF test PASS",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 20
+    },
+    {
+      "name": "Mutate test",
+      "setup": "make",
+      "run": "./hw1 mutate",
+      "input": "",
+      "output": "Mutate test PASS",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 40
+    },
+    {
+      "name": "Compare test",
+      "setup": "make",
+      "run": "./hw1 compare",
+      "input": "",
+      "output": "Compare test PASS",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 15
+    }
+  ]
+}
