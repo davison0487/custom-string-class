@@ -32,7 +32,7 @@ BufferManager::~BufferManager() {
 void BufferManager::resize(size_t newSize) {
 	char* temp = new char[newSize + 16]();
 
-	for (size_t i = 0; i < strlen(buffer); ++i)
+	for (size_t i = 0; i < std::strlen(buffer); ++i)
 		temp[i] = buffer[i];
 
 	delete[] buffer;
@@ -42,19 +42,19 @@ void BufferManager::resize(size_t newSize) {
 }
 
 void BufferManager::append(const char* aBuf) {
-	size_t oldSize = strlen(this->buffer);
+	size_t oldSize = std::strlen(this->buffer);
 
-	if (strlen(this->buffer) + strlen(aBuf) + 1 > this->bufSize)
-		this->resize(strlen(this->buffer) + strlen(aBuf) + 1);
+	if (std::strlen(this->buffer) + std::strlen(aBuf) + 1 > this->bufSize)
+		this->resize(std::strlen(this->buffer) + std::strlen(aBuf) + 1);
 
-	for (size_t i = 0; i < strlen(aBuf); ++i)
+	for (size_t i = 0; i < std::strlen(aBuf); ++i)
 		this->buffer[i + oldSize] = aBuf[i];
 };
 
 void BufferManager::append(const char ch) {
-	if (strlen(buffer) + 2 > bufSize)
-		resize(strlen(buffer) + 2);
-	buffer[strlen(buffer)] = ch;
+	if (std::strlen(buffer) + 2 > bufSize)
+		resize(std::strlen(buffer) + 2);
+	buffer[std::strlen(buffer)] = ch;
 };
 
 void BufferManager::edit(size_t pos, const char newChar) {
@@ -62,7 +62,7 @@ void BufferManager::edit(size_t pos, const char newChar) {
 };
 
 void BufferManager::remove(size_t pos, size_t len) {
-	size_t oldSize = strlen(this->buffer);
+	size_t oldSize = std::strlen(this->buffer);
 
 	for (size_t i = pos; i < oldSize - len; ++i)
 		buffer[i] = buffer[i + len];
@@ -70,12 +70,12 @@ void BufferManager::remove(size_t pos, size_t len) {
 	for (size_t i = oldSize - len; i < bufSize; ++i)
 		buffer[i] = 0;
 
-	resize(strlen(buffer));
+	resize(std::strlen(buffer));
 };
 
 void BufferManager::show() {
 	std::cout << "string: \t" << this->buffer << std::endl;
-	std::cout << "string length: \t" << strlen(buffer) << std::endl;
+	std::cout << "string length: \t" << std::strlen(buffer) << std::endl;
 	std::cout << "bufSize: \t" << bufSize << std::endl;
 }
 
@@ -90,7 +90,7 @@ String::String(const String& aString, size_t aPresize) {
 
 String::String(const char* aBuffer, size_t aPresize) {
 	if (aPresize == 0)
-		BufferManager(strlen(aBuffer)+1);
+		BufferManager(std::strlen(aBuffer)+1);
 	else
 		BufferManager(aPresize);
 	append(aBuffer);
@@ -110,14 +110,14 @@ String& String::operator=(const String& aCopy) {
 
 String& String::operator=(const char* aBuffer) {
 	delete[] this->buffer;
-	this->bufSize = strlen(aBuffer)+16;
+	this->bufSize = std::strlen(aBuffer)+16;
 	this->buffer = new char[this->bufSize]();
 	this->append(aBuffer);
 	return *this;
 };
 
 size_t String::size() const {
-	return strlen(buffer);
+	return std::strlen(buffer);
 };
 
 char& String::operator[](int pos) {
@@ -148,14 +148,14 @@ String& String::operator+=(const char* aBuffer) {
 
 String& String::insert(size_t anIndex, const String& aString, size_t aMaxCopyLen) {
 	char* suffix = new char[this->bufSize]();
-	for (size_t i = anIndex; i < strlen(this->buffer); ++i) {
+	for (size_t i = anIndex; i < std::strlen(this->buffer); ++i) {
 		suffix[i - anIndex] = this->buffer[i];
 		this->buffer[i] = 0;
 	}
 
-	char* inString = new char[strlen(aString.buffer)+1]();
+	char* inString = new char[std::strlen(aString.buffer)+1]();
 	if (aMaxCopyLen == 0)
-		aMaxCopyLen = strlen(aString.buffer);
+		aMaxCopyLen = std::strlen(aString.buffer);
 	for (size_t i = 0; i < aMaxCopyLen; ++i)
 		inString[i] = aString.buffer[i];
 
@@ -171,17 +171,17 @@ String& String::insert(size_t anIndex, const char* aString, size_t aMaxCopyLen) 
 		newstr[i] = this->buffer[i];
 
 	if (aMaxCopyLen == 0)
-		aMaxCopyLen = strlen(aString);
+		aMaxCopyLen = std::strlen(aString);
 	for (size_t i = anIndex; i < anIndex + aMaxCopyLen; ++i)
 		newstr[i] = aString[i - anIndex];
 
-	for (size_t i = anIndex + aMaxCopyLen; i < strlen(this->buffer) + aMaxCopyLen; ++i)
+	for (size_t i = anIndex + aMaxCopyLen; i < std::strlen(this->buffer) + aMaxCopyLen; ++i)
 		newstr[i] = this->buffer[i - aMaxCopyLen];
 
 	delete[] this->buffer;
 	this->buffer = newstr;
 	newstr = nullptr;
-	this->bufSize = this->bufSize + strlen(aString) + 16;
+	this->bufSize = this->bufSize + std::strlen(aString) + 16;
 	return *this;
 };
 
@@ -213,7 +213,7 @@ String& String::erase(size_t anIndex, size_t aCount) {
 };
 
 int String::compare(const String& aString) const {
-	size_t maxlen = std::min(strlen(this->buffer), strlen(aString.buffer));
+	size_t maxlen = std::min(std::strlen(this->buffer), std::strlen(aString.buffer));
 
 	for (size_t i = 0; i < maxlen; ++i) {
 		if (this->buffer[i] < aString.buffer[i])
@@ -225,9 +225,9 @@ int String::compare(const String& aString) const {
 };
 
 bool String::operator==(const String& aString) const {
-	if (strlen(this->buffer) != strlen(aString.buffer))
+	if (std::strlen(this->buffer) != std::strlen(aString.buffer))
 		return false;
-	for (size_t i = 0; i < strlen(this->buffer); ++i) {
+	for (size_t i = 0; i < std::strlen(this->buffer); ++i) {
 		if (this->buffer[i] != aString.buffer[i])
 			return false;
 	}
@@ -235,9 +235,9 @@ bool String::operator==(const String& aString) const {
 };
 
 bool String::operator==(const char* aBuffer) const {
-	if (strlen(this->buffer) != strlen(buffer))
+	if (std::strlen(this->buffer) != std::strlen(buffer))
 		return false;
-	for (size_t i = 0; i < strlen(this->buffer); ++i) {
+	for (size_t i = 0; i < std::strlen(this->buffer); ++i) {
 		if (this->buffer[i] != buffer[i])
 			return false;
 	}
@@ -245,7 +245,7 @@ bool String::operator==(const char* aBuffer) const {
 };
 
 bool String::operator<(const String& aString) const {
-	size_t maxlen = std::min(strlen(this->buffer), strlen(aString.buffer));
+	size_t maxlen = std::min(std::strlen(this->buffer), std::strlen(aString.buffer));
 
 	for (size_t i = 0; i < maxlen; ++i) {
 		if (this->buffer[i] < aString.buffer[i])
@@ -255,7 +255,7 @@ bool String::operator<(const String& aString) const {
 };
 
 bool String::operator<(const char* aBuffer) const {
-	size_t maxlen = std::min(strlen(this->buffer), strlen(aBuffer));
+	size_t maxlen = std::min(std::strlen(this->buffer), std::strlen(aBuffer));
 
 	for (size_t i = 0; i < maxlen; ++i) {
 		if (this->buffer[i] < aBuffer[i])
@@ -268,14 +268,14 @@ int String::find(const String& aSubString, size_t anOffset) const {
 	size_t i = 0, pos = anOffset;
 	std::queue<int> q;
 
-	while (pos < strlen(this->buffer)) {
+	while (pos < std::strlen(this->buffer)) {
 		if (i != 0 && this->buffer[pos] == aSubString.buffer[0])
 			q.push(pos);
 
 		if (this->buffer[pos] == aSubString.buffer[i]) {
 			++pos;
 			++i;
-			if (i == strlen(aSubString.buffer))
+			if (i == std::strlen(aSubString.buffer))
 				return pos - i;
 		}
 		else {
@@ -293,7 +293,7 @@ int String::find(const String& aSubString, size_t anOffset) const {
 };
 
 std::ostream& ECE141::operator<< (std::ostream& out, const String& aStr) {
-	for (size_t i = 0; i < strlen(aStr.buffer); ++i)
+	for (size_t i = 0; i < std::strlen(aStr.buffer); ++i)
 		out << aStr.buffer[i];
 	return out;
 };
