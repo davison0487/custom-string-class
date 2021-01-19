@@ -6,6 +6,7 @@
 #include <iostream>
 #include <queue>
 #include <algorithm>
+#include <cstring>
 
 namespace ECE141 {
 	class BufferManager {
