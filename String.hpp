@@ -28,14 +28,14 @@ namespace ECE141 {
 
 	class String : public BufferManager {
 	public:
-		String(const String& aString, size_t aPresize = 0);
-		String(const char* aBuffer, size_t aPresize = 0);
+		String(const String& aString, size_t aPresize = 1);
+		String(const char* aBuffer, size_t aPresize = 1);
 		~String();
-		String& operator=(const String& aCopy);
+		String&	operator=(const String& aCopy);
 		String& operator=(const char* aBuffer);
 
 		//accessors...
-		size_t size() const;
+		size_t	size() const;
 		
 		//mutation methods...
 		char& operator[](int pos);
@@ -55,7 +55,7 @@ namespace ECE141 {
 		String& erase(size_t anIndex, size_t aCount); //from given position, remove N chars...("cut")
 
 		//Comparision methods...
-		int compare(const String& aString) const; //[-1 if <, 0 if ==, 1 if >]
+		int	compare(const String& aString) const; //[-1 if <, 0 if ==, 1 if >]
 
 		bool operator==(const String& aString) const;
 		bool operator==(const char* aBuffer) const;
@@ -64,7 +64,7 @@ namespace ECE141 {
 		bool operator<(const char* aBuffer) const;
 
 		//Search...
-		int find(const String& aSubString, size_t anOffset = 0) const;
+		int	find(const String& aSubString, size_t anOffset = 0) const;
 
 		//stream...
 		friend std::ostream& operator<< (std::ostream& out, const String& aStr);

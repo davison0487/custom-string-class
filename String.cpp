@@ -82,18 +82,20 @@ void BufferManager::show() {
 /* ----- ECE141::String -----*/
 String::String(const String& aString, size_t aPresize) {
 	if (aPresize == 0)
-		BufferManager(aString.bufSize);
-	else 
+		BufferManager();
+	else {
 		BufferManager(aPresize);
-	this->append(aString.buffer);
+		this->append(aString.buffer);
+	}
 };
 
 String::String(const char* aBuffer, size_t aPresize) {
 	if (aPresize == 0)
-		BufferManager(std::strlen(aBuffer)+1);
-	else
+		BufferManager();
+	else {
 		BufferManager(aPresize);
-	append(aBuffer);
+		append(aBuffer);
+	}
 };
 
 String::~String() {
