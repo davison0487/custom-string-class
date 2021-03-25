@@ -1,7 +1,7 @@
 # Custom String Class
 This project includes a simplified string class, this class does not include any part of `std::string` in the implementation.
 
-Below is the interface that my class must provide.
+Below is the interface that my class provide.
 
 ```
 class String {
